@@ -37,7 +37,7 @@ for i in range(nos):
     Stu_list.setName(input("Input student name: ")) #from Object
     Stu_list.setDob(input("Input student date of birth: ")) #from Student
 
-#creat course list
+#create course list
 Cou_list = Course()
 noc = int(input("Input number of courses: "))
 for i in range(noc):
