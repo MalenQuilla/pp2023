@@ -11,6 +11,14 @@ class Main:
         self.__Cou_list = Course()
         self.__nos = 0
         self.__noc = 0
+    def getNos(self):
+        return int(self.__nos)
+    def getNoc(self):
+        return int(self.__noc)
+    def getStulist(self):
+        return self.__Stu_list
+    def getCoulist(self):
+        return self.__Cou_list
     def mainFunction(self):
         curses.curs_set(0)
         curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
@@ -84,6 +92,8 @@ class Main:
                     return
                 
     def Input(self): #Input information
+        self.screen.getch()
+        self.screen.clear()
         curses.curs_set(0)
         
         self.screen.keypad(True)
