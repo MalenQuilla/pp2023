@@ -1,62 +1,9 @@
-#When run program, please always press ENTER button to continue
-
 import math
 import numpy as np
 import curses
+from domains.StuAndCou import Student
+from domains.StuAndCou import Course
 
-class Object:
-    def __init__(self):
-        self.screen = curses.initscr()
-        self.__name = []
-        self.__id = []
-    def setName(self, name):
-        self.__name.append(name)
-    def setId(self, id):
-        self.__id.append(id)
-    def getName(self, i):
-        return self.__name[i]
-    def getInfo(self, i):
-        self.screen.addstr(2, 0, "Id: " + self.__id[i]) 
-        self.screen.addstr(3, 0, "Name: " + self.__name[i])
-    def swapName(self, i, j):
-        temp = self.__name[i]
-        self.__name[i] = self.__name[j]
-        self.__name[j] = temp
-    def swapId(self, i, j):
-        temp = self.__name[i]
-        self.__id[i] = self.__id[j]
-        self.__id[j] = temp
-class Student(Object):
-    def __init__(self):
-        super().__init__() #from Object
-        self.screen = curses.initscr()
-        self.__dob = []
-    def setDob(self, dob):
-        self.__dob.append(dob)
-    def getInfo(self, i):
-        super().getInfo(i) #from Object
-        self.screen.addstr(4, 0, "DoB:" + self.__dob[i])
-    def swapInfo(self, i, j):
-        super().swapId(i, j)
-        super().swapName(i, j)
-        temp = self.__dob[i]
-        self.__dob[i] = self.__dob[j]
-        self.__dob[j] = temp
-class Course(Object):
-    def __init__(self):
-        super().__init__() #from Object
-        self.screen = curses.initscr()
-        self.__marks = []
-        self.__credits = []
-    def setMark(self, m):
-        self.__marks.append(math.floor(m))
-    def getMark(self, i):
-        return self.__marks[i]
-    def setCredit(self, c):
-        self.__credits = np.array(c)
-    def getCredit(self, i):
-        return self.__credits[i]
-    
 class Main:
     def __init__(self):
         self.screen = curses.initscr()
@@ -64,6 +11,14 @@ class Main:
         self.__Cou_list = Course()
         self.__nos = 0
         self.__noc = 0
+    def getNos(self):
+        return int(self.__nos)
+    def getNoc(self):
+        return int(self.__noc)
+    def getStulist(self):
+        return self.__Stu_list
+    def getCoulist(self):
+        return self.__Cou_list
     def mainFunction(self):
         curses.curs_set(0)
         curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
@@ -137,6 +92,8 @@ class Main:
                     return
                 
     def Input(self): #Input information
+        self.screen.getch()
+        self.screen.clear()
         curses.curs_set(0)
         
         self.screen.keypad(True)
@@ -218,13 +175,3 @@ class Main:
         self.screen.addstr(0, 0, "**Student list after sorted: ")
         self.Sort(self.__Stu_list, GPAs, self.__nos)
         self.screen.getch()
-
-
-def MainFunc(stdscr):
-    main = Main()
-    main.Input()
-    main.Output()
-    main.mainFunction()
-    
-curses.wrapper(MainFunc)
-curses.endwin()
